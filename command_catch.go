@@ -11,6 +11,17 @@ func commandCatch(conf *config, parameter *string) error {
 		return errors.New("you must provide a pokemon name\n")
 	}
 
+	ok, err := conf.pokeapiClient.IsCaughtPokemon(parameter)
+
+	if err != nil {
+		return err
+	}
+
+	if ok {
+		fmt.Printf("You have already caught that pokemon\n")
+		return nil
+	}
+
 	dataPokemonInfo, err := conf.pokeapiClient.GetPokemonInfo(*parameter)
 
 	if err != nil {
